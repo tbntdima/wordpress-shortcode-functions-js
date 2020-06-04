@@ -9,7 +9,7 @@ const WPShortcodes = (
   let markup = content;
 
   // Picks up all of the shortcodes and turns them into an array.
-  const shortcodesRaw = markup.match(/\[(.*?)?\]/g);
+  const shortcodesRaw = markup.match(/\[(.*?)?\]/g) || [];
 
   shortcodesRaw.forEach((shortcodeRaw) => {
     const shortcodeName = shortcodeRaw
@@ -17,7 +17,8 @@ const WPShortcodes = (
       .toString();
 
     const attributes = {};
-    shortcodeRaw.match(/[\w-]+=".+?"/g).forEach((attributeRaw) => {
+    const attributesRaw = shortcodeRaw.match(/[\w-]+=".+?"/g) || [];
+    attributesRaw.forEach((attributeRaw) => {
       const attributeData = entities
         .decode(attributeRaw) // decoding entities to replace &#34; with " etc.
         .match(/([\w-]+)="(.+?)"/);
