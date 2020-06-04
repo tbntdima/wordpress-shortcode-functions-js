@@ -38,4 +38,4 @@ const WPShortcodes = (
   return markup;
 };
 
-export default WPShortcodes;
+module.exports = WPShortcodes;
