@@ -13,7 +13,7 @@ const WPShortcodes = (
 
   shortcodesRaw.forEach((shortcodeRaw) => {
     const shortcodeName = shortcodeRaw
-      .match(/(?<=\[)[a-zA-Z0-9\/]\w*/g)
+      .match(/(?<=\[)[a-zA-Z0-9/]\w*/g)
       .toString();
 
     const attributes = {};
