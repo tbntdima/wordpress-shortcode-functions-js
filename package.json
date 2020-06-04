@@ -1,6 +1,6 @@
 {
   "name": "wordpress-shortcode-functions-js",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Searches a string for Wordpress shortcodes and calls a mapped function with the attributes as parameters. Return values replace the shortcode in the string.",
   "main": "index.js",
   "scripts": {
