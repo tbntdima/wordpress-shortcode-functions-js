@@ -13,9 +13,9 @@ const WPShortcodes = (
   const shortcodesRaw = markup.match(/\[(.*?)?\]/g) || [];
 
   shortcodesRaw.forEach((shortcodeRaw) => {
-    const shortcodeName = shortcodeRaw
-      .match(/(?<=\[)[a-zA-Z0-9/]\w*/g)
-      .toString();
+    const shortcodeNameRaw =
+      shortcodeRaw.match(/(?<=\[)[a-zA-Z0-9/]\w*/g) || [];
+    const shortcodeName = shortcodeNameRaw.toString();
 
     const attributes = {};
     const attributesRaw = shortcodeRaw.match(/[\w-]+=".+?"/g) || [];
