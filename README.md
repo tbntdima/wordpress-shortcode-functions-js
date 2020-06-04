@@ -1,36 +1,93 @@
 # wordpress-shortcode-functions-js
+
 Searches a string for Wordpress shortcodes and calls a mapped function with the attributes as parameters. Return values replace the shortcode in the string.
 
+## Installation
 
-Usage: WPShortcodes( string, functionMap );
+```zsh
+npm i wordpress-shortcode-functions-js
+```
+
+## API
+
+`WPShortcodes` { Function }
+
+### Parameters
+
+- `string` { string }
+
+  String which contains you wordpress shortcodes.
+
+- `functionMap` { object }
+
+  Here you specify shortcodes and functions that will transform them.
+
+  Structure:
+
+  ```js
+  {
+  'shortcodeNameOne': shortcodeOneTransformerFunction,
+  'shortcodeNameTwo': shortcodeTwoTransformerFunction
+  }
+  ```
+
+  Where `shortcodeTransformerFunction` is a callback function that gets shortcode attributes in parameters as array:
+
+  ```js
+  const shortcodeOneTransformerFunction = (attributes) => {
+    attributes.forEach((attribute) => {
+      console.log(attribute.name, attribute.value);
+    });
+  };
+  ```
+
+## Return value
 
 Returns an object with the following structure:
 
+```js
 {
-    markup: The returned markup
-    shortcodes : [ 
-        {   
-            code: The shortcode name,
-            raw: The entire shortcode,
-            attributes: [
-                {
-                    name: The name of the attribute.
-                    value: The value of the attribute.
-                }
-            ]   
-        }
-    ]
-}
+  markup: "The returned markup",
+  shortcodes: [
+    {
+      code: "The shortcode name",
+      raw: "The entire shortcode",
+      attributes: [
+        {
+          name: "The name of the attribute.",
+          value: "The value of the attribute.",
+        },
+      ],
+    },
+  ],
+};
+```
 
-The functionMap object should be sorted as such: 
+## Example
 
+```js
+import WPShortcodes from "wordpress-shortcode-functions-js";
+
+const content = 'Hello world, [message_shortcode message="have a nice day!"]';
+
+const handleMessageShortcode = (attributes) => {
+  const message = attributes.find((attribute) => attribute.name === "message");
+  return message;
+};
+
+WPShortcodes(content, { message_shortcode, handleMessageShortcode });
+
+/*
+output
 {
-    'exampleShortcode': exampleShortcodeFunction
+  markup: 'Hello world, have',
+  shortcodes: [
+    {
+      code: 'message_shortcode',
+      raw: '[message_shortcode message="have a nice day!"]',
+      attributes: [Array]
+    }
+  ]
 }
-
-Where the value is a valid function. The shortcode attributes will be passed to the function as an object with the following structure:
-
-{
-    name: Attribute name,
-    value: Attribute value
-}
+*/
+```
